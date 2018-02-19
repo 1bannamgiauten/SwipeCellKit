@@ -17,6 +17,16 @@ import UIKit
 open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     /// The object that acts as the delegate of the `SwipeCollectionViewCell`.
     public weak var delegate: SwipeCollectionViewCellDelegate?
+
+    public var isSwipeable: Bool = false {
+      didSet {
+        if self.didConfigureGesture == false {
+          self.didConfigureGesture = true
+          self.configure()
+        }
+      }
+    }
+    var didConfigureGesture: Bool = false
     
     var animator: SwipeAnimator?
     
@@ -64,20 +74,6 @@ open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDel
             super.isHighlighted = newValue
         }
         get { return super.isHighlighted }
-    }
-    
-    /// :nodoc:
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        configure()
-    }
-    
-    /// :nodoc:
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        configure()
     }
     
     deinit {
@@ -523,4 +519,3 @@ extension SwipeCollectionViewCell {
         return true
     }
 }
-
